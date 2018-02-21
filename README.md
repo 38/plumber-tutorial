@@ -1,6 +1,8 @@
 # Be Stateful
 *pipe_cntl and state perservation*
 
+*See [diff](https://github.com/38/plumber-tutorial/compare/6-interactive-src...7-be-stateful-src) since last chapter*
+
 ---
 
 Last time we make our socket interactive, the server and client can take multiple turns of communication. But most of the interactive socket servers are stateful. For example, an old telnet base BBS application, the user needs to login first and then the connection authenticated to the logged in user, so the user can use the connection for posting messages to the BBS. 
