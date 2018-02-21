@@ -106,4 +106,4 @@ Finally, we render the output with `pstd_bio_printf`
 
 The state is attached with each connection, thus we should be able to have multiple client connect to the server at the same time. Each of the client should see it's own state.
 
-![screenshot](https://raw.githubusercontent.com/38/plumber-tutorial/7-stateful/path/test.gif)
+![screenshot](https://raw.githubusercontent.com/38/plumber-tutorial/7-stateful/test.gif)
