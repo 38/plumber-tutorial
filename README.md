@@ -102,6 +102,32 @@ Finally, we render the output with `pstd_bio_printf`
 	pstd_bio_free(bio);
 ```
 
+## PSS Syntactic Sugar
+
+This time we also need to bind the line\_no pipe as well.
+
+```javascript
+Service.start({
+	read_name := "getline";
+	say_hello := @"say Hello";
+	() -> "in" read_name "line" -> "name" say_hello "out" -> ();
+	read_name "line_no" -> "line_no" say_hello;
+});
+```
+
+In PSS language, we have some nice syntactic sugar.
+
+```javascript
+Service.start({
+	read_name := "getline";
+	say_hello := @"say Hello";
+	() -> "in" read_name {
+		"line" -> "name";
+		"line_no" -> "line_no";
+	} say_hello "out" -> ();
+});
+```
+
 ## Test Our Server
 
 The state is attached with each connection, thus we should be able to have multiple client connect to the server at the same time. Each of the client should see it's own state.
