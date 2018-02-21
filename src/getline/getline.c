@@ -28,7 +28,6 @@ static int exec(void* mem)
 	char name[128] = {};
 
 	state_t* state;
-
 	/* First of all we try to pop the previously attached state with the communication resource */
 	pipe_cntl(in, PIPE_CNTL_POP_STATE, &state);
 	/* If it doesn't have previous state, we need to allocate a new one */
