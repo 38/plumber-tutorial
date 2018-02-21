@@ -1,5 +1,7 @@
 #!env pscript
 import("service");
+import("list");
+import("dict");
 
 /* Where to look for the servlet */
 runtime.servlet.path += ":out";
@@ -9,21 +11,47 @@ insmod("mem_pipe");
 /* Listen to a TCP port */
 insmod("tcp_pipe 12345");
 
+var create_greeter = function (word_map, default) {
+	var n_names = len(word_map);
+	var greeter = {
+		namedup  := "dataflow/dup 2";
+		selector := "dataflow/demux " + List.reduce(function(x,y){return x + " " + y;}, Dict.keys(word_map));
+		extract_name := "dataflow/extract content";
+		say_default := "say " + default;
+		merger := "dataflow/firstnonempty " + (n_names + 1);
+		(name) -> "in" namedup {
+			"out0" -> "input" extract_name "output" -> "cond";
+			"out1" -> "data";
+		} selector "default" -> "name" say_default "out" -> "in0" merger "out" -> (message);
+	};
+
+	var id = 0;
+
+	for(var name in word_map)
+	{
+		var node = "say_" + (id + 1);
+		var word = word_map[name];
+		Service.add_node(greeter, node, "say " + word);
+		Service.add_pipe(greeter, "selector", "out" + id, "name", node);
+		Service.add_pipe(greeter, node, "out", "in" + (id + 1), "merger");
+		id ++;
+	}
+
+	return greeter;
+}
+
 /* Start the server */
 Service.start({
 	/* Declare a node */
 	read_name := "getline";
-	selector  := "dataflow/demux Plumber";
-	extract_name := "dataflow/extract content";
-	say_hello_to_plumber := "say Hello";
-	say_hello_to_others  := @"say Greeting\ from\ Plumber";
-	merger := "dataflow/firstnonempty 2";
-	/* Define the pipes */
-	() -> "in" read_name {
-		"line" -> "input" extract_name "output" -> "cond";
-		"line" -> "data";
-	} selector {
-		"out0" -> "name" say_hello_to_plumber "out" -> "in0";
-		"default" -> "name" say_hello_to_others "out" -> "in1";
-	} merger "out" -> ();
+	greeter   := create_greeter(
+		{
+			"Plumber": "Hello",
+			"Alice"  : "Hey",
+			"Bob"    : "Hi"
+		},
+		@"Greeting\ From\ Plumber"
+	);
+
+	() -> "in" read_name "line" -> "name" greeter "message" -> ();
 });
