@@ -1,6 +1,8 @@
 # Be Typed
 *Typed pipe and primitive types*
 
+*See [diff](https://github.com/38/plumber-tutorial/compare/7-be-stateful-src...8-be-typed-src) since last chapter*
+
 ---
 
 In the previous example, we uses binary format to passing the line number. This makes the servlet easy to implement
