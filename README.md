@@ -1,5 +1,5 @@
 # Structured Data
-* protocol managemnet and local object*
+*protocol managemnet and local object*
 
 *See [diff](https://github.com/38/plumber-tutorial/compare/8-be-typed-src...9-structured-data-type-and-RLS-src) since last chapter*
 
