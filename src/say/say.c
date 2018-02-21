@@ -9,7 +9,7 @@ static int init(uint32_t argc, char const* const* argv, void* mem)
 {
 	if(argc != 2) return ERROR_CODE(int);
 
-	in = pipe_define("in", PIPE_INPUT, NULL);
+	in = pipe_define("name", PIPE_INPUT, NULL);
 	out = pipe_define("out", PIPE_OUTPUT, NULL);
 
 	what = strdup(argv[1]);
