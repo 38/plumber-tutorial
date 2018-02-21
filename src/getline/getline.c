@@ -6,7 +6,7 @@ static pipe_t in, out;
 
 static int init(uint32_t argc, char const* const* argv, void* mem)
 {
-	in = pipe_define("in", PIPE_INPUT, NULL);
+	in = pipe_define("in", PIPE_INPUT | PIPE_PERSIST, NULL);
 	out = pipe_define("line", PIPE_OUTPUT, NULL);
 	return 0;
 }
@@ -26,8 +26,6 @@ static int exec(void* mem)
 	}
 
 	pipe_write(out, name, count);
-
-	if(!eof_rc) pipe_cntl(in, PIPE_CNTL_SET_FLAG, PIPE_PERSIST);
 
 	return 0;
 }
