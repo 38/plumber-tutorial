@@ -1,6 +1,8 @@
 # Hello World Server
 *the PSS Scripting Language*
 
+*See [diff](https://github.com/38/plumber-tutorial/compare/1-hello-world-src...2-hello-world-server-src) since last chapter*
+
 ---
 
 We already have our first servlet, in this chapter let's make our first servlet a simple socket server.
