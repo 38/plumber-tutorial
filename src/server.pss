@@ -11,9 +11,9 @@ insmod("tcp_pipe 12345");
 /* Start the server */
 Service.start({
 	/* Declare a node */
-	node := "hello";
+	say_hello := @"say Hello\ World";
 	/* Define the pipes */
-	() -> "in" node "out" -> ();
+	() -> "in" say_hello "out" -> ();
 });
 
 

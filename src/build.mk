@@ -1,4 +1,4 @@
 OUTPUT=out
-SRC=hello.c
-TARGET=hello
+SRC=say.c
+TARGET=say
 LINKER=gcc
