@@ -2,10 +2,12 @@
 #include <string.h>
 #include <stdlib.h>
 #include <pstd.h>
+#include <pstd/types/string.h>
 
-static pipe_t in, out, line_no;
+static pipe_t in, line;
 
 static pstd_type_accessor_t line_no_acc;
+static pstd_type_accessor_t line_acc;
 static pstd_type_model_t*   type_model;
 
 typedef struct {
@@ -15,11 +17,11 @@ typedef struct {
 static int init(uint32_t argc, char const* const* argv, void* mem)
 {
 	in = pipe_define("in", PIPE_INPUT | PIPE_PERSIST, NULL);
-	out = pipe_define("line", PIPE_OUTPUT, NULL);
-	line_no = pipe_define("line_no", PIPE_OUTPUT, "int32");
+	line = pipe_define("line", PIPE_OUTPUT, "plumber_tutorial/Line");
 
 	type_model = pstd_type_model_new();
-	line_no_acc = pstd_type_model_get_accessor(type_model, line_no, "value");
+	line_no_acc = pstd_type_model_get_accessor(type_model, line, "number");
+	line_acc = pstd_type_model_get_accessor(type_model, line, "content.token");
 
 	return 0;
 }
@@ -34,8 +36,6 @@ static int exec(void* mem)
 {
 	pstd_type_instance_t* inst = PSTD_TYPE_INSTANCE_LOCAL_NEW(type_model);
 
-	char name[128] = {};
-
 	state_t* state;
 
 	/* First of all we try to pop the previously attached state with the communication resource */
@@ -44,13 +44,22 @@ static int exec(void* mem)
 	if(NULL == state)
 		state = calloc(sizeof(state_t), 1);
 
+	pstd_string_t* str_obj = pstd_string_new(128);
+
 	size_t count = 0;
 	int eof_rc;
 	while(!(eof_rc = pipe_eof(in)))
 	{
-		size_t read = pipe_read(in, name + count, 1);
-		if(name[count] == '\r' || name[count] == '\n') 
-			break;
+		char buf;
+		size_t read = pipe_read(in, &buf, 1);
+		if(read > 0)
+		{
+			pstd_string_write(str_obj, &buf, 1);
+		
+			if(buf == '\r' || buf == '\n') 
+				break;
+		}
+
 		count += read;
 	}
 
@@ -59,10 +68,12 @@ static int exec(void* mem)
 	{
 		state->line_num ++;
 
-		pipe_write(out, name, count);
+		scope_token_t token = pstd_string_commit(str_obj);
 
+		PSTD_TYPE_INST_WRITE_PRIMITIVE(inst, line_acc, token);
 		PSTD_TYPE_INST_WRITE_PRIMITIVE(inst, line_no_acc, state->line_num);
 	}
+	else pstd_string_free(str_obj);
 
 	/* Finally, attach the state with the communication resource again */
 	if(eof_rc)

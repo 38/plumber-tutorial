@@ -1,0 +1,6 @@
+package plumber_tutorial;
+
+type Line {
+	plumber.std.request_local.String content;
+	int32                            number;
+};

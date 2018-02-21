@@ -15,8 +15,5 @@ Service.start({
 	read_name := "getline";
 	say_hello := @"say Hello";
 	/* Define the pipes */
-	() -> "in" read_name {
-		"line" -> "name";
-		"line_no" -> "line_no";
-	} say_hello "out" -> ();
+	() -> "in" read_name "line" -> "name" say_hello "out" -> ();
 });
