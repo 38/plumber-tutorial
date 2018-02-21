@@ -1,2 +1,5 @@
 #!/usr/bin/zsh
-make -f ${ENVROOT}/lib/plumber/servlet.mk
+cd getline && make -f ${ENVROOT}/lib/plumber/servlet.mk
+cd ..
+cd say && make -f ${ENVROOT}/lib/plumber/servlet.mk
+cd ..

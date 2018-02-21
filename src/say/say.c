@@ -20,14 +20,8 @@ static int init(uint32_t argc, char const* const* argv, void* mem)
 static int exec(void* mem)
 {
 	char name[128] = {};
-	size_t count = 0;
-	while(!pipe_eof(in))
-	{
-		size_t read = pipe_read(in, name + count, 1);
-		if(name[count] == '\r' || name[count] == '\n') 
-			break;
-		count += read;
-	}
+
+	size_t count = pipe_read(in, name, sizeof(name));
 
 	pipe_write(out, what, strlen(what));
 	pipe_write(out, ", ", 2);
