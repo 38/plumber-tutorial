@@ -1,0 +1,3 @@
+[submodule "plumber_examples"]
+	path = plumber_examples
+	url = https://github.com/38/plumber_examples.git
