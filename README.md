@@ -1,6 +1,8 @@
 # Say Your Name
 *Read from inputs*
 
+*See [diff](https://github.com/38/plumber-tutorial/compare/3-say-different-words-src...4-be-modular-src) since last chapter*
+
 ---
 
 Now we change our goal a little bit, when the socket server is connected by the client, it waits for the client say its name.
