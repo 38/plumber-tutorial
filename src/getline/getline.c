@@ -16,7 +16,8 @@ static int exec(void* mem)
 	char name[128] = {};
 	
 	size_t count = 0;
-	while(!pipe_eof(in))
+	int eof_rc;
+	while(!(eof_rc = pipe_eof(in)))
 	{
 		size_t read = pipe_read(in, name + count, 1);
 		if(name[count] == '\r' || name[count] == '\n') 
@@ -25,6 +26,8 @@ static int exec(void* mem)
 	}
 
 	pipe_write(out, name, count);
+
+	if(!eof_rc) pipe_cntl(in, PIPE_CNTL_SET_FLAG, PIPE_PERSIST);
 
 	return 0;
 }

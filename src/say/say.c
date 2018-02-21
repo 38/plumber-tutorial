@@ -26,6 +26,7 @@ static int exec(void* mem)
 	pipe_write(out, what, strlen(what));
 	pipe_write(out, ", ", 2);
 	pipe_write(out, name, count);
+	pipe_write(out, "\r\n", 2);
 
 	return 0;
 }
