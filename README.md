@@ -1,6 +1,8 @@
 # Say a Different Word
 *the Servlet Initialization String*
 
+*See [diff](https://github.com/38/plumber-tutorial/compare/2-hello-world-server-src...3-say-different-words-src) since last chapter*
+
 ---
 
 ## Generialize our first servlet
