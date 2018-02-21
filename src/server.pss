@@ -1,0 +1,19 @@
+#!env pscript
+import("service");
+
+/* Where to look for the servlet */
+runtime.servlet.path += ":out";
+
+insmod("mem_pipe");
+/* Listen to a TCP port */
+insmod("tcp_pipe 12345");
+
+/* Start the server */
+Service.start({
+	/* Declare a node */
+	node := "hello";
+	/* Define the pipes */
+	() -> "in" node "out" -> ();
+});
+
+
