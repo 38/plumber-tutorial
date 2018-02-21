@@ -1,7 +1,7 @@
 # Be Modular
 *Combining multiple servlets*
 
-*See [diff](https://github.com/38/plumber-tutorial/compare/4-be-modular-src...4-say-your-name-src) since last chapter*
+*See [diff](https://github.com/38/plumber-tutorial/compare/5-be-modular-src...4-say-your-name-src) since last chapter*
 
 ---
 
