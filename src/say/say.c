@@ -47,6 +47,7 @@ static int exec(void* mem)
 static int unload(void* mem)
 {
 	free(what);
+	pstd_type_model_free(type_model);
 	return 0;
 }
 

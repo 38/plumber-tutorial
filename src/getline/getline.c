@@ -75,8 +75,15 @@ static int exec(void* mem)
 	return 0;
 }
 
+static int unload(void* mem)
+{
+	pstd_type_model_free(type_model);
+	return 0;
+}
+
 SERVLET_DEF = {
 	.desc = "Read a single line from in",
 	.init = init,
 	.exec = exec,
+	.unload = unload
 };
