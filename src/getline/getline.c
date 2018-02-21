@@ -54,7 +54,10 @@ static int exec(void* mem)
 	}
 
 	/* Finally, attach the state with the communication resource again */
-	pipe_cntl(in, PIPE_CNTL_PUSH_STATE, state, free_state);
+	if(eof_rc)
+		pipe_cntl(in, PIPE_CNTL_CLR_FLAG, PIPE_PERSIST);
+	else
+		pipe_cntl(in, PIPE_CNTL_PUSH_STATE, state, free_state);
 
 	return 0;
 }
