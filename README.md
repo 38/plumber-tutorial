@@ -1,6 +1,8 @@
 # Interactive
 *Pipe flags and persist communication resources*
 
+*See [diff](https://github.com/38/plumber-tutorial/compare/5-be-modular-src...6-interactive-src) since last chapter*
+
 ---
 
 ## A Interactive Socket Server
