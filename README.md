@@ -100,9 +100,9 @@ pipe_read(line_no, &num, sizeof(int));
 Finally, we render the output with `pstd_bio_printf`
 
 ```C
-	pstd_bio_t* bio = pstd_bio_new(out);
-	pstd_bio_printf(bio, "[%d] %s, %s\r\n", num, what, name_buf);
-	pstd_bio_free(bio);
+pstd_bio_t* bio = pstd_bio_new(out);
+pstd_bio_printf(bio, "[%d] %s, %s\r\n", num, what, name_buf);
+pstd_bio_free(bio);
 ```
 
 ## PSS Syntactic Sugar
