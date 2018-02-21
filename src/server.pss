@@ -13,7 +13,17 @@ insmod("tcp_pipe 12345");
 Service.start({
 	/* Declare a node */
 	read_name := "getline";
-	say_hello := @"say Hello";
+	selector  := "dataflow/demux Plumber";
+	extract_name := "dataflow/extract content";
+	say_hello_to_plumber := "say Hello";
+	say_hello_to_others  := @"say Greeting\ from\ Plumber";
+	merger := "dataflow/firstnonempty 2";
 	/* Define the pipes */
-	() -> "in" read_name "line" -> "name" say_hello "out" -> ();
+	() -> "in" read_name {
+		"line" -> "input" extract_name "output" -> "cond";
+		"line" -> "data";
+	} selector {
+		"out0" -> "name" say_hello_to_plumber "out" -> "in0";
+		"default" -> "name" say_hello_to_others "out" -> "in1";
+	} merger "out" -> ();
 });

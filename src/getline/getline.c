@@ -4,11 +4,12 @@
 #include <pstd.h>
 #include <pstd/types/string.h>
 
-static pipe_t in, line;
-
-static pstd_type_accessor_t line_no_acc;
-static pstd_type_accessor_t line_acc;
-static pstd_type_model_t*   type_model;
+typedef struct {
+	pipe_t in, line;
+	pstd_type_accessor_t line_no_acc;
+	pstd_type_accessor_t line_acc;
+	pstd_type_model_t*   type_model;
+} servlet_context_t;
 
 typedef struct {
 	int line_num;
@@ -16,12 +17,14 @@ typedef struct {
 
 static int init(uint32_t argc, char const* const* argv, void* mem)
 {
-	in = pipe_define("in", PIPE_INPUT | PIPE_PERSIST, NULL);
-	line = pipe_define("line", PIPE_OUTPUT, "plumber_tutorial/Line");
+	servlet_context_t* ctx = (servlet_context_t*)mem;
 
-	type_model = pstd_type_model_new();
-	line_no_acc = pstd_type_model_get_accessor(type_model, line, "number");
-	line_acc = pstd_type_model_get_accessor(type_model, line, "content.token");
+	ctx->in = pipe_define("in", PIPE_INPUT | PIPE_PERSIST, NULL);
+	ctx->line = pipe_define("line", PIPE_OUTPUT, "plumber_tutorial/Line");
+
+	ctx->type_model = pstd_type_model_new();
+	ctx->line_no_acc = pstd_type_model_get_accessor(ctx->type_model, ctx->line, "number");
+	ctx->line_acc = pstd_type_model_get_accessor(ctx->type_model, ctx->line, "content.token");
 
 	return 0;
 }
@@ -34,12 +37,14 @@ static int free_state(void* state)
 
 static int exec(void* mem)
 {
-	pstd_type_instance_t* inst = PSTD_TYPE_INSTANCE_LOCAL_NEW(type_model);
+	servlet_context_t* ctx = (servlet_context_t*)mem;
+	
+	pstd_type_instance_t* inst = PSTD_TYPE_INSTANCE_LOCAL_NEW(ctx->type_model);
 
 	state_t* state;
 
 	/* First of all we try to pop the previously attached state with the communication resource */
-	pipe_cntl(in, PIPE_CNTL_POP_STATE, &state);
+	pipe_cntl(ctx->in, PIPE_CNTL_POP_STATE, &state);
 	/* If it doesn't have previous state, we need to allocate a new one */
 	if(NULL == state)
 		state = calloc(sizeof(state_t), 1);
@@ -48,16 +53,15 @@ static int exec(void* mem)
 
 	size_t count = 0;
 	int eof_rc;
-	while(!(eof_rc = pipe_eof(in)))
+	while(!(eof_rc = pipe_eof(ctx->in)))
 	{
 		char buf;
-		size_t read = pipe_read(in, &buf, 1);
+		size_t read = pipe_read(ctx->in, &buf, 1);
 		if(read > 0)
 		{
-			pstd_string_write(str_obj, &buf, 1);
-		
 			if(buf == '\r' || buf == '\n') 
 				break;
+			pstd_string_write(str_obj, &buf, 1);
 		}
 
 		count += read;
@@ -70,16 +74,16 @@ static int exec(void* mem)
 
 		scope_token_t token = pstd_string_commit(str_obj);
 
-		PSTD_TYPE_INST_WRITE_PRIMITIVE(inst, line_acc, token);
-		PSTD_TYPE_INST_WRITE_PRIMITIVE(inst, line_no_acc, state->line_num);
+		PSTD_TYPE_INST_WRITE_PRIMITIVE(inst, ctx->line_acc, token);
+		PSTD_TYPE_INST_WRITE_PRIMITIVE(inst, ctx->line_no_acc, state->line_num);
 	}
 	else pstd_string_free(str_obj);
 
 	/* Finally, attach the state with the communication resource again */
 	if(eof_rc)
-		pipe_cntl(in, PIPE_CNTL_CLR_FLAG, PIPE_PERSIST);
+		pipe_cntl(ctx->in, PIPE_CNTL_CLR_FLAG, PIPE_PERSIST);
 	else
-		pipe_cntl(in, PIPE_CNTL_PUSH_STATE, state, free_state);
+		pipe_cntl(ctx->in, PIPE_CNTL_PUSH_STATE, state, free_state);
 
 	pstd_type_instance_free(inst);
 
@@ -88,12 +92,14 @@ static int exec(void* mem)
 
 static int unload(void* mem)
 {
-	pstd_type_model_free(type_model);
+	servlet_context_t* ctx = (servlet_context_t*)mem;
+	pstd_type_model_free(ctx->type_model);
 	return 0;
 }
 
 SERVLET_DEF = {
 	.desc = "Read a single line from in",
+	.size = sizeof(servlet_context_t),
 	.init = init,
 	.exec = exec,
 	.unload = unload
