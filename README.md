@@ -39,7 +39,7 @@ pipe_define("output", PIPE_OUTPUT, NULL);
 In fact there are few more pipe flags that modifies the behavior of pipe.
 
 | flag | Effect         |
-------------------------
+| ---- | -------------- |
 | PIPE\_INPUT | Declare the port as an input port |
 | PIPE\_OUTPUT | Declare the port as an output port |
 | PIPE\_ASYNC  | Enable the asynchronus write function |
