@@ -38,19 +38,13 @@ pipe_define("output", PIPE_OUTPUT, NULL);
 
 In fact there are few more pipe flags that modifies the behavior of pipe.
 
--------------------------
 | flag | Effect         |
 ------------------------
 | PIPE\_INPUT | Declare the port as an input port |
--------------------------
 | PIPE\_OUTPUT | Declare the port as an output port |
--------------------------
 | PIPE\_ASYNC  | Enable the asynchronus write function |
--------------------------
 | PIPE\_SHADOW | Declare the output is a duplication of another port |
--------------------------
-| PIPE\_PERSISTENT | Suggest the Plumber framework hold the underlying resource for reuse|
--------------------------
+| PIPE\_PERSIST | Suggest the Plumber framework hold the underlying resource for reuse|
 
 This time, we are not going to discuss them all. Instead we forcus on the `PIPE\_PERSISTENT` flag, which suggests the Plumber framework keep the underlying resource. 
 
