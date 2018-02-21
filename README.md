@@ -1,7 +1,7 @@
 # Say Your Name
 *Read from inputs*
 
-*See [diff](https://github.com/38/plumber-tutorial/compare/3-say-different-words-src...4-be-modular-src) since last chapter*
+*See [diff](https://github.com/38/plumber-tutorial/compare/3-say-different-words-src...4-say-your-name-src) since last chapter*
 
 ---
 
