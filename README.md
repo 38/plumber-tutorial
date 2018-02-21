@@ -1,6 +1,8 @@
 # Hello World!
 *The Basic Programming Model*
 
+*See [diff](https://github.com/38/plumber-tutorial/compare/0-introduction-src...1-hello-world-src) since last chapter*
+
 ---
 
 ## Intro
