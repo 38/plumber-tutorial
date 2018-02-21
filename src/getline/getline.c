@@ -1,8 +1,12 @@
 #include <pservlet.h>
 #include <string.h>
 #include <stdlib.h>
+#include <pstd.h>
 
 static pipe_t in, out, line_no;
+
+static pstd_type_accessor_t line_no_acc;
+static pstd_type_model_t*   type_model;
 
 typedef struct {
 	int line_num;
@@ -12,7 +16,10 @@ static int init(uint32_t argc, char const* const* argv, void* mem)
 {
 	in = pipe_define("in", PIPE_INPUT | PIPE_PERSIST, NULL);
 	out = pipe_define("line", PIPE_OUTPUT, NULL);
-	line_no = pipe_define("line_no", PIPE_OUTPUT, NULL);
+	line_no = pipe_define("line_no", PIPE_OUTPUT, "int32");
+
+	type_model = pstd_type_model_new();
+	line_no_acc = pstd_type_model_get_accessor(type_model, line_no, "value");
 
 	return 0;
 }
@@ -25,6 +32,8 @@ static int free_state(void* state)
 
 static int exec(void* mem)
 {
+	pstd_type_instance_t* inst = PSTD_TYPE_INSTANCE_LOCAL_NEW(type_model);
+
 	char name[128] = {};
 
 	state_t* state;
@@ -51,7 +60,8 @@ static int exec(void* mem)
 		state->line_num ++;
 
 		pipe_write(out, name, count);
-		pipe_write(line_no, &state->line_num, sizeof(int));
+
+		PSTD_TYPE_INST_WRITE_PRIMITIVE(inst, line_no_acc, state->line_num);
 	}
 
 	/* Finally, attach the state with the communication resource again */
@@ -59,6 +69,8 @@ static int exec(void* mem)
 		pipe_cntl(in, PIPE_CNTL_CLR_FLAG, PIPE_PERSIST);
 	else
 		pipe_cntl(in, PIPE_CNTL_PUSH_STATE, state, free_state);
+
+	pstd_type_instance_free(inst);
 
 	return 0;
 }
