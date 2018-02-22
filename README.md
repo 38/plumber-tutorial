@@ -1,4 +1,9 @@
 # Be Stateful
+
+[Prev](https://github.com/38/plumber-tutorial/blob/6-interactive-src/README.md) | 
+[Tables of Content](https://github.com/38/plumber-tutorial/blob/master/README.md) | 
+[Next](https://github.com/38/plumber-tutorial/blob/8-be-typed/README.md)
+
 *pipe_cntl and state perservation*
 
 *See [diff](https://github.com/38/plumber-tutorial/compare/6-interactive-src...7-be-stateful-src) since last chapter*
