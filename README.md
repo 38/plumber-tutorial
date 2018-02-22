@@ -3,9 +3,8 @@
 ---
 ## About this tutorial
 
-This is the tutorial repo for Plumber, in this repo we are going to explorer the world of 
-Plumber with a simple socket server example. To see each of the chapter, checkout the branch
-for that chapter.
+Hi there, this is the tutorial repo for Plumber. 
+We are going to explorer the world of Plumber with a simple socket server example. 
 
 In this tutorial we will build a simple socket server from scratch and explorer a few fundamental concepts in Plumber. 
 The example uses C as development language, but Plumber can support other languages as well.
