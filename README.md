@@ -1,4 +1,8 @@
 # Advanced PSS Topics
+
+[Prev](https://github.com/38/plumber-tutorial/blob/10-reusable-servlet-and-standard-servlets/README.md) | 
+[Tables of Content](https://github.com/38/plumber-tutorial/blob/master/README.md) | 
+
 *Graph Manipulation & Logic Servlets*
 
 *See [diff](https://github.com/38/plumber-tutorial/compare/10-reusable-servlet-and-standard-servlets...11-graph-generator-src) since last chapter*
