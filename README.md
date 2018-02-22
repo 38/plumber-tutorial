@@ -54,7 +54,7 @@ Pipes   : [ID]	Name                            Flags
 ```
 
 The `plumber/base/Raw` is the type name. This is the special type in plumber indicates the pipe should
-assing raw binary data. That is why we just feel our servlet port is untyped. 
+transmit raw binary data. That is why we just feel our servlet port is untyped. 
 
 To address the problem we mentioned earlier, we need make the servlet with more specific type. In our case
 we should make it a integer. The following code declares the `line_no` port with 32-bit signed integer type.
