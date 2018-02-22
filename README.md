@@ -1,4 +1,9 @@
 # Interactive
+
+[Prev](https://github.com/38/plumber-tutorial/blob/5-be-modular/README.md) | 
+[Tables of Content](https://github.com/38/plumber-tutorial/blob/master/README.md) | 
+[Next](https://github.com/38/plumber-tutorial/blob/7-stateful/README.md)
+
 *Pipe flags and persist communication resources*
 
 *See [diff](https://github.com/38/plumber-tutorial/compare/5-be-modular-src...6-interactive-src) since last chapter*
