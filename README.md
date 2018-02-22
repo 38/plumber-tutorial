@@ -1,4 +1,9 @@
 # Be Modular
+
+[Prev](https://github.com/38/plumber-tutorial/blob/4-say-your-name/README.md) | 
+[Tables of Content](https://github.com/38/plumber-tutorial/blob/master/README.md) | 
+[Next](https://github.com/38/plumber-tutorial/blob/6-interactive/README.md)
+
 *Combining multiple servlets*
 
 *See [diff](https://github.com/38/plumber-tutorial/compare/4-say-your-name-src...5-be-modular-src) since last chapter*
