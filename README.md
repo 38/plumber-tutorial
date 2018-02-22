@@ -54,7 +54,7 @@ In fact there are few more pipe flags that modifies the behavior of pipe.
 | PIPE\_SHADOW | Declare the output is a duplication of another port |
 | PIPE\_PERSIST | Suggest the Plumber framework hold the underlying resource for reuse|
 
-This time, we are not going to discuss them all. Instead we forcus on the `PIPE\_PERSISTENT` flag, which suggests the Plumber framework keep the underlying resource. 
+This time, we are not going to discuss them all. Instead we forcus on the `PIPE_PERSIST` flag, which suggests the Plumber framework keep the underlying resource. 
 
 Although a servlet doesn't actually manipulate any communication resources such as TCP connections, but the pipe port is an abstraction of some kinds of communication resources. Each time the exec callback of the servlet is invoked, each of the pipe port has an underlying communication resources. For example, for a exec callback invocation triggered by a TCP connection, the underlying resource should be the TCP socket. For the exec callback invocation triggered by upstream servlet's output, the underlying resources should be memory, etc. The persistent pipe flag give the Plumber infrastructure the hint" the resource might be useful in the future.
 
@@ -63,5 +63,5 @@ Translate the interactive socket server into Plumber term, we could say the inpu
 In order to do so, we only needs to change one line of code.
 
 ```C
-in = pipe_define("in", PIPE_INPUT | PIPE_PERSISTENT, NULL);
+in = pipe_define("in", PIPE_INPUT | PIPE_PERSIST, NULL);
 ```
