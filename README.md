@@ -1,4 +1,9 @@
 # Say Your Name
+
+[Prev](https://github.com/38/plumber-tutorial/blob/3-say-different-words/README.md) | 
+[Tables of Content](https://github.com/38/plumber-tutorial/blob/master/README.md) | 
+[Next](https://github.com/38/plumber-tutorial/blob/5-be-modular/README.md)
+
 *Read from inputs*
 
 *See [diff](https://github.com/38/plumber-tutorial/compare/3-say-different-words-src...4-say-your-name-src) since last chapter*
