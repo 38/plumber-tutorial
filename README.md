@@ -1,4 +1,9 @@
 # Be Typed
+
+[Prev](https://github.com/38/plumber-tutorial/blob/7-be-stateful-src/README.md) | 
+[Tables of Content](https://github.com/38/plumber-tutorial/blob/master/README.md) | 
+[Next](https://github.com/38/plumber-tutorial/blob/9-structured-data/README.md)
+
 *Typed pipe and primitive types*
 
 *See [diff](https://github.com/38/plumber-tutorial/compare/7-be-stateful-src...8-be-typed-src) since last chapter*
