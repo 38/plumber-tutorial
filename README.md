@@ -32,9 +32,9 @@ Service.start({
 });
 ```
 
-Line 1 and 2 loads the IO module with `insmod`, which is used as the input and output of the entire application. 
+Line 1 and 2 loads the IO module with `insmod`. `tcp_pipe` module actually handles the network traffic and `mem_pipe` module is the default communication method between different servlets in the same application.
 
-Line 4 imports the library to start a service and the last few lines defines a pipe binding graph and run the application.
+Line 4 imports a PSS library to start a service and the last few lines defines a pipe binding graph and run the application.
 
 ## Run the application
 
