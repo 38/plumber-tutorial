@@ -39,7 +39,7 @@ Connection closed.
 
 In the previous chapter, we have used the function `pipe_define` to define a named pipe port. We can define the input port with `PIPE_INPUT` flag and `PIPE_OUTPUT` flag for the output port.
 
-```
+```C
 pipe_define("input", PIPE_INPUT, NULL);
 pipe_define("output", PIPE_OUTPUT, NULL);
 ```
